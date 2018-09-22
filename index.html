@@ -1,0 +1,187 @@
+<script src="https://aframe.io/releases/0.8.0/aframe.min.js"></script>
+
+<script>
+  setTimeout(() => {
+    
+  document.getElementById('mySound').play();
+}, 1000);
+  
+AFRAME.registerComponent('cursor-listener', {
+  init: function () {
+  var lastIndex = -1;
+    var next=document.querySelector('#next');
+    var exit=document.querySelector('#exit');
+  var gp=document.querySelector("#gp");
+  var welcome=document.querySelector("#welcome");
+    var sound=document.getElementById('mySound');
+  var greatpyramid=["This is the largest pyramid ever built. It is also known as the Pyramid of Khufu, the pharaoh who was buried inside.",
+    " It is 482ft (147m) tall and contains about 2,300,000 blocks of limestone, each weighing an average of 2.7 tons",
+    "The Great Pyramid is located at the center of the land mass of the earth. The east/west parallel that crosses the most land and the north/south meridian that crosses the most land intersect in two places on the earth, one in the ocean and the other at the Great Pyramid",
+    "Khuf's son and grandson built pyramids on the same site"];
+  
+    var gp_audio=["https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fgp1.mp3?1536831655105",
+                      "https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fgp2.mp3?1536831655161",
+                      "https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fgp3.mp3?1536831655383",
+                      "https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fgp4.mp3?1536831655213"
+                     ];  
+    this.el.addEventListener('click', function (evt) {
+      document.getElementById('mySound').pause();
+     lastIndex = (lastIndex + 1) % greatpyramid.length;
+      welcome.setAttribute("visible","false");
+    if(this.getAttribute("visible")==true)
+      { // if visible
+      if(this.getAttribute("value")=="Next")
+      {
+        
+        if(lastIndex==0) lastIndex=1;
+   
+      gp.setAttribute('value',greatpyramid[lastIndex]);
+        
+        sound.pause();
+        sound.setAttribute('src',gp_audio[lastIndex]);
+        sound.play();
+   
+      }
+     else  if(this.getAttribute("value")=="Done")
+      {
+      sound.pause();
+      gp.setAttribute('value',"Great Pyramid");
+      next.setAttribute("visible",false);
+      exit.setAttribute("visible",false);
+      gp.setAttribute('geometry', 'width', 4);
+      gp.setAttribute('geometry', 'height', 1.5);
+      gp.setAttribute('width',9);
+                         
+      }
+    else {
+        
+      next.setAttribute("visible",true);
+      exit.setAttribute("visible",true);
+      this.setAttribute('material', 'color', "grey");
+      this.setAttribute('material','opacity','0.4');
+ if(lastIndex==0)
+ {
+   this.setAttribute('value',greatpyramid[lastIndex]);
+   sound.pause();
+   sound.setAttribute('src',gp_audio[lastIndex]);
+   sound.play();
+   
+ }
+      this.setAttribute('geometry', 'width', 9);
+      this.setAttribute('geometry', 'height', 5);
+    }//end of else
+      }//end of if visible
+    });
+  }
+});
+  // start great sphinx script
+  AFRAME.registerComponent('sphinx-listener', {
+  init: function () {
+  var lastIndex = -1;
+    var sound=document.getElementById('mySound');
+    var next=document.querySelector('#sphinxnext');
+   var exit=document.querySelector('#sphinxexit');
+  var sph=document.querySelector("#sphinx");
+    var welcome=document.querySelector("#welcome");
+  var sphinx=["The giant statue of the Great Sphinx was built more than 4,500 years ago, to guard the pyramid of Khafre at Giza.",
+                  " It has the head of a pharaoh and the body of a lion.",
+                    "The Great Sphinx was carved out of a huge outcrop of limestone that sticks up above the desert floor.",
+                    " It is the largest free-standing sculpture to survive from ancient times. "
+                   ];
+    
+    var sphinx_audio=["https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fsp1.mp3?1536831684137",
+                      "https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fsp2.mp3?1536831684221",
+                      "https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fsp3.mp3?1536831684634",
+                      "https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fsp4.mp3?1536831684289"
+                     ];
+      
+    this.el.addEventListener('click', function (evt) {
+     lastIndex = (lastIndex + 1) % sphinx.length;
+      welcome.setAttribute("visible","false");
+      if(this.getAttribute("visible")==true)
+      { // if visible
+      if(this.getAttribute("value")=="Next")
+      {
+        if(lastIndex==0) lastIndex=1;
+       sph.setAttribute('value',sphinx[lastIndex]);
+        sound.pause();
+        sound.setAttribute('src',sphinx_audio[lastIndex]);
+        sound.play();
+   
+      }
+     else if(this.getAttribute("value")=="Done")
+      {
+      sound.pause();
+      sph.setAttribute('value',"Great Sphinx");
+      next.setAttribute("visible",false);
+      exit.setAttribute("visible",false);
+      sph.setAttribute('geometry', 'width', 6);
+      sph.setAttribute('geometry', 'height', 1.5);
+      sph.setAttribute('width',20);
+                         
+      }
+    else {
+        
+      next.setAttribute("visible",true);
+      exit.setAttribute("visible",true);
+      this.setAttribute('material', 'color', "grey");
+      this.setAttribute('material','opacity','0.7');
+ if(lastIndex==0) {
+   
+   
+   this.setAttribute('value',sphinx[lastIndex]);
+   sound.pause();
+  sound.setAttribute('src',sphinx_audio[lastIndex]);
+   sound.play();
+ }
+      this.setAttribute('geometry', 'width', 18);
+      this.setAttribute('geometry', 'height', 10);
+     //this.setAttribute('position','35.181 6.957 5.15');
+    }//end of else
+      }//end of if visble
+    });
+  }
+});
+  
+  //end of great sphinx script
+</script>
+
+
+<body>
+  <a-scene  >
+  <!-- great pyramid code -->  
+<!-- a-text id="gp" cursor-listener  align="center" color="black" font="kelsonsans" value="Great Pyramid" width="9" position="18.181 6.957 -20.15" rotation="-10 -60 10"  geometry="primitive: plane; height: auto; width:4; height:1.5;"  ></a-text -->
+    <a-text id="gp" cursor-listener="" align="center" color="black" font="kelsonsans" value="Great Pyramid" width="9" position="3.363655405591114 9.220892343943689 -22.61282972024177" rotation="27.465690804616287 0.004772892041550879 0.6795793168052314" geometry="primitive:plane;height:1.5;width:4" scale="2.4137405957822375 3.040427210096584 1" text=""></a-text>
+<a-text id="next" cursor-listener  align="center" color="black" font="kelsonsans" value="Next" width="9" position="3.363655405591114 1.220892343943689 -10.61282972024177" rotation="27.465690804616287 0.004772892041550879 0.6795793168052314" geometry="primitive: plane; height: auto; width:2; height:1;"  visible="false" ></a-text>
+<a-text id="exit" cursor-listener  align="center" color="black" font="kelsonsans" value="Done" width="9" position="1.363655405591114 1.220892343943689 -10.61282972024177" rotation="27.465690804616287 0.004772892041550879 0.6795793168052314"  geometry="primitive: plane; height: auto; width:2; height:1;" visible="false"  ></a-text>
+    <!-- end of great pyramid -->
+    <!-- sphinx code -->
+<a-text id="sphinx"      sphinx-listener align="center" color="black" font="kelsonsans" value="Great Sphinx" width="13" position="10.363655405591114 3.220892343943689 -13.61282972024177" rotation="3.593 4.468 -3.04" geometry="primitive: plane; height: auto; width:6; height:1.5;"  ></a-text>
+<a-text id="sphinxnext"  sphinx-listener align="center" color="black" font="kelsonsans" value="Next" width="9" position="10.363655405591114 -2.220892343943689 -10.61282972024177" rotation="3.593 4.468 -3.04"   geometry="primitive: plane; height: auto; width:2; height:1;" visible="false"  ></a-text>
+<a-text id="sphinxexit"  sphinx-listener align="center" color="black" font="kelsonsans" value="Done" width="9" position="8.363655405591114 -2.220892343943689 -10.61282972024177" rotation="-10 -60 10"  geometry="primitive: plane; height: auto; width:2; height:1;" visible="false"  ></a-text>
+
+    
+    <!-- end of sphinx -->
+    
+    <!-- welcome image -->
+     <a-curvedimage id="welcome" src="https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fwelcome_message.png?1536444768685" height="4.0" radius="5.7" theta-length="72"
+                 rotation="0 190 0" scale="0.8 0.8 0.8"  ></a-curvedimage>
+    
+    
+    <!-- end of welcome image -->
+  <a-sky  src="https://cdn.glitch.com/f2b2a962-a781-41bf-a369-f844b87d3672%2FSphinx.jpg?1536140588350" rotation="0 -130 0" id="pyramids" geometry="phiStart:-80;"></a-sky>
+
+    <a-entity camera look-controls>
+  <a-entity cursor="fuse: true; fuseTimeout: 500"
+            position="0 0 -1"
+            geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+            material="color: black; shader: flat">
+  </a-entity>
+</a-entity>
+
+
+    
+  
+  </a-scene>
+  <audio id="mySound" src="https://cdn.glitch.com/302c401d-6d59-4eff-8a58-ea89237d5376%2Fpyramid.mp3?1536834754755"></audio>
+</body>
